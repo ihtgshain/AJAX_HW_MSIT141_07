@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <button id="btn_JS" class="m-2">JavaScript</button>
+    <div id="campus1" class="container bg-info"></div>
+    <button id="btn_JQ" class="m-2">jQuery</button>
+    <div id="campus2" class="container bg-success"></div>
+
+</div>
+
+@section Scripts{
+
+    <script>var emp = {
+            "employees": [
+                { "name": "Tom", "workYears": 3, "salary": 35000 },
+                { "name": "Jack", "workYears": 5, "salary": 40000 },
+                { "name": "Mary", "workYears": 7, "salary": 45000 }
+            ]
+        };
+
+        //JavaScript===============================================================
+        document.querySelector("#btn_JS").addEventListener("click", () => {
+            const campus1 = document.querySelector("#campus1");
+            campus1.innerHTML = `<div class="row">
+                                    <div class="col border border-primary"><h2>JavaScript<h2></div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col border border-primary font-italic">Name</div>
+                                    <div class="col border border-primary font-italic">WorkYears</div>
+                                    <div class="col border border-primary font-italic">Salary</div>
+                                  </div>`;
+            emp.employees.forEach(function (employee) {
+                let { name, workYears, salary } = employee;
+                campus1.innerHTML += `<div class="row">
+                                        <div class="col border border-primary">${name}</div>
+                                        <div class="col border border-primary">${workYears}</div>
+                                        <div class="col border border-primary">${salary}</div>
+                                     </div>`;
+            })
+        })
+
+        $("#btn_JQ").click(function () {
+            $("#campus2").html(`<div class="row">
+                                    <div class="col border border-primary"><h2>jQuery<h2></div>
+                                 </div>
+                                 <div class="row">
+                                    <div class="col border border-primary font-italic">Name</div>
+                                    <div class="col border border-primary font-italic">WorkYears</div>
+                                    <div class="col border border-primary font-italic">Salary</div>
+                                  </div>`);
+            $.each(emp.employees, function (e) {
+                $("#campus2").append(`<div class="row">
+                                        <div class="col border border-primary">${e.name}</div>
+                                        <div class="col border border-primary">${e.workYears}</div>
+                                        <div class="col border border-primary">${e.salary}</div>
+                                     </div>`)
+            })
+        })
+
+        //$("#btnChange").click(function(){
+        //    //$('.display-4').text("Welcom MVC");
+        //    //console.log("hello");
+        //    emp.employees.forEach(function (item) {
+        //        //let s = item.name + "/" + item.workYears + "/"+ item.salary
+        //        //console.log(s);
+        //        for (var s in item) {
+        //            console.log(item[s]+"/")
+        //        }
+        //    })
+        //})
+    </script>
+}
+
