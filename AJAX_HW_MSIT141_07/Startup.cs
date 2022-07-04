@@ -1,6 +1,8 @@
+using AJAX_HW_MSIT141_07.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +25,12 @@ namespace AJAX_HW_MSIT141_07
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<DemoContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DemoConnection"));
+            });
+            services.AddControllersWithViews();
+
             services.AddControllersWithViews();
         }
 
@@ -50,7 +58,8 @@ namespace AJAX_HW_MSIT141_07
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    //pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Register}/{id?}");
             });
         }
     }
