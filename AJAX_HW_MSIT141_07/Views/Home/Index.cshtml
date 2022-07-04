@@ -52,7 +52,7 @@
                                     <div class="col border border-primary font-italic">WorkYears</div>
                                     <div class="col border border-primary font-italic">Salary</div>
                                   </div>`);
-            $.each(emp.employees, function (e) {
+            $.each(emp.employees, function (i,e) {
                 $("#campus2").append(`<div class="row">
                                         <div class="col border border-primary">${e.name}</div>
                                         <div class="col border border-primary">${e.workYears}</div>
