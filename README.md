@@ -2,4 +2,4 @@
 ### AJAX作業(07_張正昱)
 
 - 0701：按鈕讀取JSON字串顯示表格(/Home/Index) 
-- 0704：確認帳號(name)是否已存在(/Home/Register、/Api/NameCheck)
+- 0704：blur()確認帳號是否已存在(/Home/Register、/Api/NameCheck)
