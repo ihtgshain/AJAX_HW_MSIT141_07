@@ -23,9 +23,10 @@
         };
 
         //JavaScript===============================================================
+        let temp = document.createDocumentFragment();
         document.querySelector("#btn_JS").addEventListener("click", () => {
             const campus1 = document.querySelector("#campus1");
-            campus1.innerHTML = `<div class="row">
+            temp.innerHTML = `<div class="row">
                                     <div class="col border border-primary"><h2>JavaScript<h2></div>
                                  </div>
                                  <div class="row">
@@ -35,16 +36,17 @@
                                   </div>`;
             emp.employees.forEach(function (employee) {
                 let { name, workYears, salary } = employee;
-                campus1.innerHTML += `<div class="row">
+                temp.innerHTML += `<div class="row">
                                         <div class="col border border-primary">${name}</div>
                                         <div class="col border border-primary">${workYears}</div>
                                         <div class="col border border-primary">${salary}</div>
                                      </div>`;
             })
+            campus1.innerHTML = temp.innerHTML;
         })
 
         $("#btn_JQ").click(function () {
-            $("#campus2").html(`<div class="row">
+            $(temp).empty().append(`<div class="row">
                                     <div class="col border border-primary"><h2>jQuery<h2></div>
                                  </div>
                                  <div class="row">
@@ -53,12 +55,13 @@
                                     <div class="col border border-primary font-italic">Salary</div>
                                   </div>`);
             $.each(emp.employees, function (i,e) {
-                $("#campus2").append(`<div class="row">
+                $(temp).append(`<div class="row">
                                         <div class="col border border-primary">${e.name}</div>
                                         <div class="col border border-primary">${e.workYears}</div>
                                         <div class="col border border-primary">${e.salary}</div>
-                                     </div>`)
+                                        </div>`)
             })
+            $("#campus2").html(temp);
         })
 
         //$("#btnChange").click(function(){
