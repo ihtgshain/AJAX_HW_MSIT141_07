@@ -84,5 +84,11 @@ namespace AJAX_HW_MSIT141_07.Controllers
             byte[] img = _context.Members.Find(id).FileData;
             return File(img, "image/jpeg");
         }
+
+        public IActionResult GetKeyWords(string kw)
+        {
+            var result = _context.Members.Select(x => x.Name).Where(y => y.Contains(kw));
+            return Json(result);
+        }
     }
 }

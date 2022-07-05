@@ -3,56 +3,151 @@
     ViewData["Title"] = "Address";
 }
 
-<h1>地址</h1>
+<h3>地址</h3>
 <select id="selCity" style="min-width:10rem"></select>
 <select id="selDistrict" style="min-width:10rem"></select>
 <select id="selRoad" style="min-width:10rem"></select>
+<hr />
+<br />
+<br />
+<br />
+
+<h3>自動提詞(members' name)</h3>
+<form>
+  <div class="form-group row">
+    <label for="inputSearch" class="col-sm-1 col-form-label"><h4>搜尋</h4></label>
+    <div>
+        <div>
+            <input type="text" class="form-control" id="inputSearch" placeholder="請輸入姓名">
+        </div>
+        <div>
+            <ul id="ulAuto" class="border border-light bg-light" style="list-style-type:none;" ></ul>
+        </div>
+    </div>
+  </div>
+</form>
 
 @section Scripts{
     <script>
+    @*===========================自動提詞===========================*@
+    const inputSearch = document.querySelector('#inputSearch');
+    const ulAuto = document.querySelector('#ulAuto');
+
+    inputSearch.addEventListener('input',()=>{
+        const kw=inputSearch.value;
+        AutoComp(kw);
+        //console.log(kw)
+    })
+
+    async function AutoComp(kw){
+        ulAuto.innerHTML="";
+        const response = await fetch('@Url.Content("~/api/GetKeyWords")'+`?kw=${kw}`);
+        const result = await response.json();
+        //console.log(result);
+        result.forEach(x=>{ulAuto.innerHTML+=`<li onclick=AddToInput("${x}")>${x}</li>`})
+    }
+
+    function AddToInput(w){
+        //console.log(w);
+        inputSearch.value=w;
+        ulAuto.innerHTML="";
+    }
+
+
+    @*=========================地址===========================*@
     const selCity = document.querySelector('#selCity');
     const selDistrict = document.querySelector('#selDistrict');
     const selRoad = document.querySelector('#selRoad');
-    const xhr = new XMLHttpRequest();
-    xhr.addEventListener('load', () => {
-        const datas = JSON.parse(xhr.responseText);
-        datas.forEach((city) => {
-            const opt = new Option(city, city);
-            selCity.options.add(opt);
-        })
-    });
-    xhr.open("GET","@Url.Content("~/api/city")");
-    xhr.send();
+    let f=document.createDocumentFragment();
 
-    selCity.addEventListener('change', () => {
+    async function LoadCities(){
+        f.innerHTML="";
+        const response = await fetch('@Url.Content("~/api/city")');
+        const result = await response.json();
+        result.forEach(x=>{f.innerHTML+=`<option value=${x}>${x}</option>`});
+        selCity.innerHTML=f.innerHTML;
         let target = selCity.options[selCity.selectedIndex].value;
-        xhr.addEventListener('load', () => {
-            selDistrict.innerHTML = "";
-            const datas = JSON.parse(xhr.responseText);
-            datas.forEach((district) => {
-                const opt = new Option(district, district);
-                selDistrict.options.add(opt);
-            })
-        })
-        xhr.open("GET","@Url.Content("~/api/district")"+`?city=${target}`);
-        xhr.send();
+        LoadDistricts(target);
+    }
+    LoadCities();
+
+    async function LoadDistricts(target){
+        f.innerHTML="";
+        const response = await fetch('@Url.Content("~/api/district")'+`?city=${target}`);
+        const result = await response.json();
+        result.forEach(x=>{f.innerHTML+=`<option value=${x}>${x}</option>`});
+        selDistrict.innerHTML=f.innerHTML;
+        target = selDistrict.options[selDistrict.selectedIndex].value;
+        LoadRoads(target);
+    }
+
+    async function LoadRoads(target){
+        f.innerHTML="";
+        const response = await fetch('@Url.Content("~/api/road")'+`?district=${target}`);
+        const result = await response.json();
+        result.forEach(x=>{f.innerHTML+=`<option value=${x}>${x}</option>`});
+        selRoad.innerHTML=f.innerHTML;
+    }
+
+    selCity.addEventListener('change',()=>{
+        let target = selCity.options[selCity.selectedIndex].value;
+        LoadDistricts(target);
     });
 
-    selDistrict.addEventListener('change', () => {
+    selDistrict.addEventListener('change',()=>{
         let target = selDistrict.options[selDistrict.selectedIndex].value;
-        xhr.addEventListener('load', () => {
-        selRoad.innerHTML = "";
-        const datas = JSON.parse(xhr.responseText);
-        datas.forEach((Road) => {
-            const opt = new Option(Road, Road);
-            selRoad.options.add(opt);
-        })
-    })
-    xhr.open("GET","@Url.Content("~/api/Road")"+`?district=${target}`);
-    xhr.send();
-});
+        LoadRoads(target);
+    });
+    
 
 
 
+
+
+
+
+
+
+    //============farewell XMLHttpRequest=============
+//    const xhr = new XMLHttpRequest();
+//    const xhr2 = new XMLHttpRequest();
+//    const xhr3 = new XMLHttpRequest();
+//    xhr.addEventListener('load', () => {
+//        const datas = JSON.parse(xhr.responseText);
+//        datas.forEach((city) => {
+//            const opt = new Option(city, city);
+//            selCity.options.add(opt);
+//        })
+//    });
+//    xhr.open("GET","@Url.Content("~/api/city")");
+//    xhr.send();
+
+//    selCity.addEventListener('change', () => {
+//        let target = selCity.options[selCity.selectedIndex].value;
+//        xhr2.addEventListener('load', () => {
+//            selDistrict.innerHTML = "";
+//            const datas = JSON.parse(xhr2.responseText);
+//            datas.forEach((district) => {
+//                const opt = new Option(district, district);
+//                selDistrict.options.add(opt);
+//            })
+//        })
+//        xhr2.open("GET","@Url.Content("~/api/district")"+`?city=${target}`);
+//        xhr2.send();
+//    });
+
+//    selDistrict.addEventListener('change', () => {
+//        let target = selDistrict.options[selDistrict.selectedIndex].value;
+//        xhr3.addEventListener('load', () => {
+//        selRoad.innerHTML = "";
+//        const datas = JSON.parse(xhr3.responseText);
+//        datas.forEach((Road) => {
+//            const opt = new Option(Road, Road);
+//            selRoad.options.add(opt);
+//        })
+//    })
+//    xhr3.open("GET","@Url.Content("~/api/Road")"+`?district=${target}`);
+//    xhr3.send();
+//});
     </script>
 }
