@@ -32,6 +32,7 @@
     @*===========================自動提詞===========================*@
     const inputSearch = document.querySelector('#inputSearch');
     const ulAuto = document.querySelector('#ulAuto');
+    let f=document.createDocumentFragment();
 
     inputSearch.addEventListener('input',()=>{
         const kw=inputSearch.value;
@@ -40,11 +41,13 @@
     })
 
     async function AutoComp(kw){
+        f.innerHTML="";
         ulAuto.innerHTML="";
         const response = await fetch('@Url.Content("~/api/GetKeyWords")'+`?kw=${kw}`);
         const result = await response.json();
         //console.log(result);
-        result.forEach(x=>{ulAuto.innerHTML+=`<li onclick=AddToInput("${x}")>${x}</li>`})
+        result.forEach(x=>{f.innerHTML+=`<li onclick=AddToInput("${x}")>${x}</li>`})
+        ulAuto.innerHTML=f.innerHTML;
     }
 
     function AddToInput(w){
@@ -58,7 +61,6 @@
     const selCity = document.querySelector('#selCity');
     const selDistrict = document.querySelector('#selDistrict');
     const selRoad = document.querySelector('#selRoad');
-    let f=document.createDocumentFragment();
 
     async function LoadCities(){
         f.innerHTML="";
