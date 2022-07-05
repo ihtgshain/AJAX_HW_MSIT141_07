@@ -1,4 +1,5 @@
 ﻿using AJAX_HW_MSIT141_07.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -31,6 +32,42 @@ namespace AJAX_HW_MSIT141_07.Controllers
         {
             return View();
         }
+
+        public IActionResult FirstAjax()
+        {
+            return View();
+        }
+
+        public IActionResult AjaxPost()
+        {
+            return View();
+        }
+        public IActionResult AjaxPostFormData()
+        {
+            return View();
+        }
+        public IActionResult Address()
+        {
+            return View();
+        }
+
+        public IActionResult promise()
+        {
+            return View();
+        }
+
+        public IActionResult Fetch()
+        {
+            return View();
+        }
+
+
+
+
+
+
+
+
 
         public IActionResult Privacy()
         {

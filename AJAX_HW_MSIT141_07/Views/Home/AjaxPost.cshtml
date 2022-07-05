@@ -1,0 +1,48 @@
+﻿<form method="post" enctype="application/x-www-form-urlencoded">
+    <div class="form-group">
+        <label for="txtName">姓名</label>
+        <input type="text" class="form-control col-4" id="txtName" name="name">
+    </div>
+        
+    <div class="form-group">
+        <label for="txtEmail">信箱</label>
+        <input type="email" class="form-control col-4" id="txtEmail" name="email">
+    </div>
+
+        <div class="form-group">
+        <label for="txtAge">年紀</label>
+        <input type="number" class="form-control col-4" id="txtAge" name="age">
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<div class="alert alert-info" id="div1"></div>
+
+@section Scripts{ 
+    <script>
+        const btnSubmit = document.querySelector(".btn");
+        const txtName = document.querySelector("#txtName");
+        const txtEmail = document.querySelector("#txtEmail");
+        const txtAge = document.querySelector("#txtAge");
+        const divInfo = document.querySelector("#div1");
+
+        btnSubmit.addEventListener("click", (evt) => {
+            evt.preventDefault();
+
+            const xhr = new XMLHttpRequest();
+            xhr.addEventListener('load', () => {
+                console.log("load");
+                const data = xhr.responseText;
+                divInfo.innerHTML = `<h3>${data}</h3>`;
+            })
+
+            const params = `name=${txtName.value}&age=${txtAge.value}&email=${txtEmail.value}`
+            xhr.open('POST', `@Url.Content("~/api/index")`);
+            xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+            xhr.send(params);
+        })
+
+
+    </script>
+}

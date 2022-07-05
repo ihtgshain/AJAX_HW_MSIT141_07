@@ -54,7 +54,7 @@ namespace AJAX_HW_MSIT141_07.Models
 
             modelBuilder.Entity<Member>(entity =>
             {
-                entity.Property(e => e.MemberId).ValueGeneratedNever();
+                entity.Property(e => e.MemberId).ValueGeneratedOnAdd();  //自動+1流水編號
 
                 entity.Property(e => e.Email).HasMaxLength(200);
 

@@ -1,0 +1,74 @@
+﻿<h1>FirstAjax</h1>
+    姓名：<input type="text" id="textname" class="form-control"/><br />
+    年紀：<input type="number" id="textage" class="form-control"/>
+
+
+<button id="btnAjax" class="btn btn-info m-2">FirstAjax</button>
+<button id="btnStop" class="btn btn-danger m-2">Abort</button>
+<div id="div1" class="alert alert-secondary"></div>
+
+
+
+@section Scripts{
+    <script>
+        const btnStart = document.querySelector("#btnAjax");
+        const btnStop = document.querySelector("#btnStop");
+        const divInfo = document.querySelector("#div1");
+        const name = document.querySelector("#textname");
+        const age = document.querySelector("#textage");
+
+
+        //步驟一建立Ajax物件
+        var xhr = new XMLHttpRequest();
+
+        btnStop.addEventListener('click', () => {
+            xhr.abort();
+        })
+
+
+        btnStart.addEventListener('click', () => {
+            //步驟三在load事件中接收資料
+            //當伺服器回傳結果完成後就會觸發load事件
+            xhr.addEventListener('load', () => {
+                console.log("load");
+                const data = xhr.responseText;
+                divInfo.innerHTML=`<h2>${data}</h2>`
+            })
+
+            //步驟二對伺服器端發出要求(Request)
+
+            const url = "@Url.Content("~/api/index")";  //伺服器端的/api/index
+            const params = `?name=${name.value}&age=${age.value}`;
+
+            xhr.open("GET", url + params);
+            //xhr.open('GET', `/api/Index?name=${name.value}&age=${age.value}`);//開啟網址，但此寫法在用/開頭，server上會導向wwwroot
+            xhr.timeout = 3000;
+            xhr.send();//按下Enter鍵才會真的去執行
+        })
+
+        xhr.addEventListener('loadstart', () => {
+            console.log("loadStart");
+            btnStart.textContent = "Loading...";
+            btnStart.setAttribute("disabled", "disabled");
+        })
+        xhr.addEventListener('loadend', () => {
+            console.log("loadEnd");
+            btnStart.textContent = "FirstAjax";
+            btnStart.removeAttribute("disable");
+        })
+        xhr.addEventListener('timeout', () => {
+            console.log("timeOut");
+            divInfo.innerHTML="<h3>伺服器忙錄中，請稍後再試</h3>"
+        })
+        xhr.addEventListener('abort', () => {
+            console.log("abort");
+            divInfo.innerHTML = "<h3>您中止了執行</h3>"
+        })
+
+    </script>
+    
+
+
+ }
+
+
