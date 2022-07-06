@@ -9,7 +9,7 @@
 <button id="buttonGet" class="btn btn-primary">get</button>
 <button id="buttonPost" class="btn btn-secondary">post</button>
 <button id="buttonJson" class="btn btn-success">getJson</button>
-<button id="buttonLoad" class="btn btn-info">load</button>
+<button id="buttonLoad" class="border-0 bg-white">load</button>
 <button id="buttonAjax" class="btn btn-warning">ajax</button>
 <button id="buttonCors" class="btn btn-danger">cors</button>
 <div class="alert alert-dark mt-3 w-50" role="alert" id="divAlert">
@@ -42,6 +42,14 @@
         })
         $('#buttonAjax').click(function () {
             $('#divAlert').text("AJAX")
+                        $.ajax({
+                url: '@Url.Content("~/api/district")',
+                type: 'GET', //POST getJson等都可以用
+                data: { "city": "臺北市" },
+                dataType:'json'
+            }).done((data) => {
+                console.log(data);
+            })
         })
         $('#buttonCors').click(function () {
             $('#divAlert').text("CORs")

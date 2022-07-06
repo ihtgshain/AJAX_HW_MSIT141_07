@@ -33,9 +33,15 @@ namespace AJAX_HW_MSIT141_07.Controllers
             }
             return Content($"{user.name}您好,您的年紀是{user.age}，您的信箱是{user.email}!!", "text/plain", System.Text.Encoding.UTF8);
         }
-        public IActionResult NameCheck(CUser user)
+        //public IActionResult NameCheck(CUser user)
+        //{
+        //    string result = _context.Members.Any(x => x.Name == user.name) ? "true" : "false";
+
+        //    return Content(result, "text/plain", System.Text.Encoding.UTF8);
+        //}
+        public IActionResult NameCheck(string name)
         {
-            string result = _context.Members.Any(x => x.Name == user.name) ? "true" : "false";
+            string result = _context.Members.Any(x => x.Name == name) ? "true" : "false";
 
             return Content(result, "text/plain", System.Text.Encoding.UTF8);
         }

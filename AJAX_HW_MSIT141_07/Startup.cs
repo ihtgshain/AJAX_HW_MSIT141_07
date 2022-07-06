@@ -59,11 +59,11 @@ namespace AJAX_HW_MSIT141_07
                 endpoints.MapControllerRoute(
                     name: "default",
                     //pattern: "{controller=Home}/{action=Index}/{id?}");
-                    //pattern: "{controller=Home}/{action=Register}/{id?}");
+                    pattern: "{controller=Home}/{action=Register}/{id?}");
                     //pattern: "{controller=Home}/{action=Address}/{id?}");
                     //pattern: "{controller=Home}/{action=Promise}/{id?}");
                     //pattern: "{controller=Home}/{action=Fetch}/{id?}");
-                    pattern: "{controller=Home}/{action=jQuery}/{id?}");
+                    //pattern: "{controller=Home}/{action=jQuery}/{id?}");
             });
         }
     }
