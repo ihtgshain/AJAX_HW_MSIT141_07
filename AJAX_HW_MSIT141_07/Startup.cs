@@ -25,6 +25,7 @@ namespace AJAX_HW_MSIT141_07
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddDbContext<DemoContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DemoConnection"));
@@ -49,7 +50,6 @@ namespace AJAX_HW_MSIT141_07
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseAuthorization();
@@ -59,11 +59,11 @@ namespace AJAX_HW_MSIT141_07
                 endpoints.MapControllerRoute(
                     name: "default",
                     //pattern: "{controller=Home}/{action=Index}/{id?}");
-                    pattern: "{controller=Home}/{action=Register}/{id?}");
+                    //pattern: "{controller=Home}/{action=Register}/{id?}");
                     //pattern: "{controller=Home}/{action=Address}/{id?}");
                     //pattern: "{controller=Home}/{action=Promise}/{id?}");
                     //pattern: "{controller=Home}/{action=Fetch}/{id?}");
-                    //pattern: "{controller=Home}/{action=jQuery}/{id?}");
+                    pattern: "{controller=Home}/{action=jQuery}/{id?}");
             });
         }
     }
