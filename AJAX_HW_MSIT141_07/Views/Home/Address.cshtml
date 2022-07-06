@@ -37,7 +37,6 @@
     inputSearch.addEventListener('input',()=>{
         const kw=inputSearch.value;
         AutoComp(kw);
-        //console.log(kw)
     })
 
     async function AutoComp(kw){
@@ -45,13 +44,11 @@
         ulAuto.innerHTML="";
         const response = await fetch('@Url.Content("~/api/GetKeyWords")'+`?kw=${kw}`);
         const result = await response.json();
-        //console.log(result);
         result.forEach(x=>{f.innerHTML+=`<li onclick=AddToInput("${x}")>${x}</li>`})
         ulAuto.innerHTML=f.innerHTML;
     }
 
     function AddToInput(w){
-        //console.log(w);
         inputSearch.value=w;
         ulAuto.innerHTML="";
     }

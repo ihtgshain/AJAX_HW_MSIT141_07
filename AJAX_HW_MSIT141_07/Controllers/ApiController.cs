@@ -87,7 +87,7 @@ namespace AJAX_HW_MSIT141_07.Controllers
 
         public IActionResult GetKeyWords(string kw)
         {
-            var result = _context.Members.Select(x => x.Name).Where(y => y.Contains(kw));
+            var result = _context.Members.Select(x => x.Name).Where(y => y.Contains(kw)).Take(10);
             return Json(result);
         }
     }
