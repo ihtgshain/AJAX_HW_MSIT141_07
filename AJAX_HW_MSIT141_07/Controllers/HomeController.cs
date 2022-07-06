@@ -61,11 +61,25 @@ namespace AJAX_HW_MSIT141_07.Controllers
             return View();
         }
 
+        public IActionResult History()
+        {
+            return View();
+        }
 
+        public IActionResult jQuery()
+        {
+            return View();
+        }
 
+        public IActionResult ShipperCors()
+        {
+            return View();
+        }
 
-
-
+        public IActionResult ShipperCorsEmpty()
+        {
+            return View();
+        }
 
 
 
