@@ -1,0 +1,13 @@
+﻿
+
+<h2>Partial View</h2>
+<hr />
+<p>From Action ： @ViewBag.data</p>
+<div>
+    <ul>
+        @foreach (var n in Model)
+        {
+            <li>@n.Name</li>
+        }
+    </ul>
+</div>

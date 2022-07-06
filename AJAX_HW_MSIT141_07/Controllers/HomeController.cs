@@ -80,7 +80,11 @@ namespace AJAX_HW_MSIT141_07.Controllers
         {
             return View();
         }
-
+        public IActionResult Partial()
+        {
+            ViewBag.data = "Hello Partial!!";
+            return PartialView(_context.Members);
+        }
 
 
         public IActionResult Privacy()
